@@ -2,13 +2,23 @@
 
 ```
 opam pin add ppx_sexp_conv --dev-repo
-mkae
+make
 ```
 
 In this demo we want to link to PPX rewriters together: `first/first.ml`
-which annotation all types with `[@@deriving sepx]` and `ppx_sexp_conv`.
+which annotates all types with `[@@deriving sexp]` and `ppx_sexp_conv`.
 The problem is that two rewriters doesn't apply one after another without
-special options. For example,let's process file `hello/hello_world.ml`
+special options. For example, let's process file `hello/hello_world.ml`.
+
+Original file:
+
+```ocaml
+let () = print_endline "asdfasdfa"
+
+type t = Int
+
+let x = sexp_of_asdf
+```
 
 After `dune exec first/pp_combined.exe -- hello/hello_world.ml` only `first`
 is applied
@@ -57,6 +67,6 @@ let x = sexp_of_asdf
 ```
 
 We have a solution for running rewriter manually but there is still a problem with
-running rewriters automatically. For example, it's not abvious what should be
+running rewriters automatically. For example, it's not obvious what should be
 written in `hello/dune` to apply both transformations for `hello/hello_world.ml`.
 Any ideas?
