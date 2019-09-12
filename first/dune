@@ -1,0 +1,25 @@
+(env
+  (dev
+    (flags (-strict-sequence -strict-formats -short-paths -keep-locs -w -3-9-32))))
+
+
+(library
+  (name        first)
+  (kind ppx_rewriter)
+  (modules ppx_first)
+  (flags (:standard -safe-string))
+  (libraries ppxlib)
+  (preprocess (pps ppxlib.metaquot))
+)
+
+(executable
+  (name pp_first)
+  (libraries first)
+  (modules pp_first)
+  )
+
+(executable
+  (name pp_combined)
+  (libraries first ppx_sexp_conv)
+  (modules pp_combined)
+  )

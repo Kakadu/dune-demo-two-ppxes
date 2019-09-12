@@ -1,0 +1,4 @@
+(executable
+  (name hello_world)
+  (preprocess (staged_pps first ppx_sexp_conv))
+  )
